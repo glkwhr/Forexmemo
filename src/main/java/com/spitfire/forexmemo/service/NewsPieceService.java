@@ -11,6 +11,9 @@ import com.spitfire.forexmemo.domain.NewsPiece;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+
 @Service
 public class NewsPieceService {
 
@@ -22,7 +25,7 @@ public class NewsPieceService {
      * @param newsPiece 完整的NewsPiece对象
      * @return 被保存的NewsPiece对象
      * */
-    public String saveNewsPiece(NewsPiece np){
+    public String saveNewsPiece(NewsPiece np) {
         if(!validateSave(np)){
             return "Invalid NewsPiece";
         }
@@ -89,5 +92,11 @@ public class NewsPieceService {
             result = false;
         }
         return result;
+    }
+
+    public List<NewsPiece> findByDate(String date){
+        String startTime = date+" 00:00:00.000";
+        String endTime = date+" 23:59:59.999";
+        return newsPieceRepository.findByDate(startTime, endTime);
     }
 }
